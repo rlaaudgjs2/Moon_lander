@@ -43,7 +43,7 @@ public class LandingArea {
     }
     
     
-    private void Initialize()
+    private void Initialize() // ¹ßÆÇ
     {   
         // X coordinate of the landing area is at 46% frame width.
         x = (int)(Framework.frameWidth * 0.46);

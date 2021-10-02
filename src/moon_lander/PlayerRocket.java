@@ -163,9 +163,9 @@ public class PlayerRocket {
         // Calculating speed for moving up or down.
         if(Canvas.keyboardKeyState(KeyEvent.VK_W))
         {
-            speedY -= speedAccelerating;
-       
-            Music.start();
+        	Music.start();
+        	speedY -= speedAccelerating;
+            
         }
             else
             {
@@ -197,11 +197,13 @@ public class PlayerRocket {
         // If the rocket is landed.
         if(landed)
         {
+        	
             g2d.drawImage(rocketLandedImg, x, y, null);
         }
         // If the rocket is crashed.
         else if(crashed)
         {
+        	
             g2d.drawImage(rocketCrashedImg, x, y + rocketImgHeight - rocketCrashedImg.getHeight(), null);
         }
         // If the rocket is still in the space.
@@ -209,10 +211,9 @@ public class PlayerRocket {
         {
             // If player hold down a W key we draw rocket fire.
             if(Canvas.keyboardKeyState(KeyEvent.VK_W))
-                g2d.drawImage(rocketFireImg, x + 12, y + 66, null);
+            g2d.drawImage(rocketFireImg, x + 12, y + 66, null);
             g2d.drawImage(rocketImg, x, y, null);
-            Music Music = new Music("Fly.mp3", false);
-            Music.start();
+          
         }
     }
     

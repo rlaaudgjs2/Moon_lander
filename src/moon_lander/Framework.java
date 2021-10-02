@@ -213,9 +213,10 @@ public class Framework extends Canvas {
                 game.Draw(g2d, mousePosition());
             break;
             case GAMEOVER:
+            	
                 game.DrawGameOver(g2d, mousePosition(), gameTime);
             break;
-            case MAIN_MENU:
+            case MAIN_MENU://여기에 버튼 추가해서 case문 실행 할 수 있도록 하기
                 g2d.drawImage(moonLanderMenuImg, 0, 0, frameWidth, frameHeight, null);
                 g2d.setColor(Color.white);
                 g2d.drawString("Use w a d keys to controle the rocket.", frameWidth / 2 - 117, frameHeight / 2);
@@ -256,7 +257,8 @@ public class Framework extends Canvas {
         game.RestartGame();
         
         // We change game status so that the game can start.
-        gameState = GameState.PLAYING;
+        gameState 
+        = GameState.PLAYING;
     }
     
     /**

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
 
 /**
@@ -18,6 +19,9 @@ import javax.imageio.ImageIO;
 
 public class Game {
 
+	private Item item;
+	
+	private life life;
     /**
      * The space rocket with which player will have to land.
      */
@@ -65,6 +69,8 @@ public class Game {
     {
         playerRocket = new PlayerRocket();
         landingArea  = new LandingArea();
+        item = new Item();
+        life = new life();
     }
     
     /**
@@ -92,6 +98,8 @@ public class Game {
     public void RestartGame()
     {
         playerRocket.ResetPlayer();
+        item.Create();
+        life.Create();
     }
     
     
@@ -106,6 +114,8 @@ public class Game {
         // Move the rocket
         playerRocket.Update();
         
+        Music Music1 = new Music("Fail.mp3", false);
+        Music Music2 = new Music("success.MP3", false);
         // Checks where the player rocket is. Is it still in the space or is it landed or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing area.
         if(playerRocket.y + playerRocket.rocketImgHeight - 10 > landingArea.y)
@@ -114,11 +124,18 @@ public class Game {
             if((playerRocket.x > landingArea.x) && (playerRocket.x < landingArea.x + landingArea.landingAreaImgWidth - playerRocket.rocketImgWidth))
             {
                 // Here we check if the rocket speed isn't too high.
-                if(playerRocket.speedY <= playerRocket.topLandingSpeed)
+                if(playerRocket.speedY <= playerRocket.topLandingSpeed) {
                     playerRocket.landed = true;
+                
+                Music1.close();
+                Music2.start();
+                }
                 else
-                    playerRocket.crashed = true;
-            }
+                {    playerRocket.crashed = true;
+                Music1.start();
+                Music2.close();
+                }
+                }
             else
                 playerRocket.crashed = true;
                 
@@ -133,12 +150,15 @@ public class Game {
      * @param mousePosition current mouse position.
      */
     public void Draw(Graphics2D g2d, Point mousePosition)
-    {
+    { 
         g2d.drawImage(backgroundImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
         
         landingArea.Draw(g2d);
         
         playerRocket.Draw(g2d);
+        item.Draw(g2d);
+        
+        life.Draw(g2d);
     }
     
     
