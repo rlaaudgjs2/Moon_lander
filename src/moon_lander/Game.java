@@ -19,6 +19,12 @@ import javax.imageio.ImageIO;
 
 public class Game {
 
+	
+	
+	private final static int MoveitemSpon = 5;
+	
+	private MoveItem moveitem[] = new MoveItem[MoveitemSpon];
+	
 	private Item item;
 	
 	private life life;
@@ -42,7 +48,8 @@ public class Game {
      */
     private BufferedImage redBorderImg;
     
-
+    private BufferedImage MoveItemImg;
+    
     public Game()
     {
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
@@ -70,7 +77,12 @@ public class Game {
         playerRocket = new PlayerRocket();
         landingArea  = new LandingArea();
         item = new Item();
+        
         life = new life();
+        for(int i=0; i< MoveitemSpon; i++ )
+        {
+        	moveitem[i] = new MoveItem();
+        }
     }
     
     /**
@@ -97,9 +109,14 @@ public class Game {
      */
     public void RestartGame()
     {
+    	
         playerRocket.ResetPlayer();
         item.Create();
         life.Create();
+        for(int i=0; i< MoveitemSpon; i++ )
+        {
+        	moveitem[i] = new MoveItem();
+        }
     }
     
     
@@ -141,7 +158,8 @@ public class Game {
                 
             Framework.gameState = Framework.GameState.GAMEOVER;
         }
-    }
+      }
+    
     
     /**
      * Draw the game to the screen.
@@ -186,5 +204,10 @@ public class Game {
             g2d.drawString("You have crashed the rocket!", Framework.frameWidth / 2 - 95, Framework.frameHeight / 3);
             g2d.drawImage(redBorderImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
         }
+    }
+    
+    public void life(Graphics2D g2d, life life )
+    {
+    	
     }
 }

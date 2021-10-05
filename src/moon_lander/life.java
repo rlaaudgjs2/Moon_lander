@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 public class life {
 	
 	private BufferedImage LifeImg;
-	
+	private int Max = 3;
 	private int LifeCount;
 	private int lx; // 생명 표현할 위치 x값 
 	private int ly; // 생명 표현할 위치 y값
@@ -30,8 +30,10 @@ public class life {
 
 	private void Initialize() {
 		// TODO Auto-generated method stub
+		
 		lx = 430;
 		ly = 2;
+		
 	}
 	private void LoadContent() {
 		// TODO Auto-generated method stub
@@ -47,11 +49,15 @@ public class life {
 	            Logger.getLogger(life.class.getName()).log(Level.SEVERE, null, ex);
 		 		}
 		
+		
 	}
 	public void Create() {
+		
 		heart = false;
+		
 		lx = 430;
 		ly = 2;
+		
 	}
 	public void ResetLife(life life)
     {
@@ -69,11 +75,9 @@ public class life {
 		}
 		else
 		{
-			for(int i=0;i<3;i++)
-			{
-				int j=5;
-			g2d.drawImage(LifeImg, lx+j, ly, null);
-			}
+			
+			g2d.drawImage(LifeImg, lx, ly, null);
+			
 			}
 
 }
