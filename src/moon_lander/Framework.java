@@ -19,7 +19,7 @@ import javax.imageio.ImageIO;
  */
 
 public class Framework extends Canvas {
-    
+
     /**
      * Width of the frame.
      */
@@ -147,7 +147,7 @@ public class Framework extends Canvas {
                     //...
                 break;
                 case MAIN_MENU:
-                    //...
+
                 break;
                 case OPTIONS:
                     //...
@@ -216,12 +216,12 @@ public class Framework extends Canvas {
             	
                 game.DrawGameOver(g2d, mousePosition(), gameTime);
             break;
-            case MAIN_MENU://¿©±â¿¡ ¹öÆ° Ãß°¡ÇØ¼­ case¹® ½ÇÇà ÇÒ ¼ö ÀÖµµ·Ï ÇÏ±â
-                g2d.drawImage(moonLanderMenuImg, 0, 0, frameWidth, frameHeight, null);
-                g2d.setColor(Color.white);
-                g2d.drawString("Use w a d keys to controle the rocket.", frameWidth / 2 - 117, frameHeight / 2);
-                g2d.drawString("Press any key to start the game.", frameWidth / 2 - 100, frameHeight / 2 + 30);
-                g2d.drawString("WWW.GAMETUTORIAL.NET", 7, frameHeight - 5);
+            case MAIN_MENU://ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½Æ° ï¿½ß°ï¿½ï¿½Ø¼ï¿½ caseï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½Ï±ï¿½
+//                g2d.drawImage(moonLanderMenuImg, 0, 0, frameWidth, frameHeight, null);
+//                g2d.setColor(Color.white);
+//                g2d.drawString("Use w a d keys to controle the rocket.", frameWidth / 2 - 117, frameHeight / 2);
+//                g2d.drawString("Press any key to start the game.", frameWidth / 2 - 100, frameHeight / 2 + 30);
+//                g2d.drawString("WWW.GAMETUTORIAL.NET", 7, frameHeight - 5);
             break;
             case OPTIONS:
                 //...

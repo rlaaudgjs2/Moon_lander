@@ -13,16 +13,16 @@ import javax.imageio.ImageIO;
 
 public class Item {
 	private Random random;
-		
-	private BufferedImage fixedItemImg;
-	
-	private int ix; // ¾ÆÀÌÅÛ À§Ä¡ x°ª
-	private int iy; // ¾ÆÀÌÅÛ À§Ä¡ y°ª
 
-	private int ItemImgx;
-	private int ItemImgy;
+	public BufferedImage fixedItemImg;
+
+	public int ix; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ xï¿½ï¿½
+	public int iy; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ yï¿½ï¿½
+
+	public int ItemImgx;
+	public int ItemImgy;
 	
-	private boolean fixedItem;
+	public boolean fixedItem;
 	
 	
 	

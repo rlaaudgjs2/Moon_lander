@@ -2,21 +2,24 @@ package moon_lander;
 
 public class Score {
 	
+public static int score  = 10;
+	public static int total  = 0;
 
-	private int plusItem; // 스코어 아이템을 먹었을 때 
-	
-	private int RocketPerfo; // 성능 아이템을 먹었을 때 
-	
-	private int total = 0;
-	
-	public Score() {
-		
-		sum();
-		
+	public static int SumScore() {
+		if (score > total)
+			total = score;
+		return total;
 	}
 
-	private void sum() {
-		// TODO Auto-generated method stub
-		
+	
+	public static int PlusScore() {
+		return total;
+	}
+
+	public static void SetScore(int a) {
+		score = a;
+	}
+	public static void total(int a) {
+		score = a;
 	}
 }

@@ -1,8 +1,8 @@
 package moon_lander;
+
 import javazoom.jl.player.Player;
 
 import java.io.BufferedInputStream;
-
 import java.io.FileInputStream;
 
 
@@ -30,7 +30,7 @@ public class Music extends Thread {
     }
 
     //Àç»ýÀ½¾Ç º¯°æ
-    
+
     public void change(String filename, boolean isloop) {
         player.close();
         this.interrupt();
@@ -39,7 +39,7 @@ public class Music extends Thread {
     }
 
     //À½¾ÇÁ¾·á
-    
+
     public void close() {
         isloop = false;
         player.close();
@@ -55,9 +55,9 @@ public class Music extends Thread {
                 player = new Player(bis);
                 player.play();
             } while (isloop);
-        } catch (Exception e) {
+            } catch (Exception e) {
 
+            }
         }
-    }
 
-}
+    }

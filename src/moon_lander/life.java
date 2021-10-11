@@ -1,6 +1,6 @@
 package moon_lander;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -12,11 +12,10 @@ import javax.imageio.ImageIO;
 public class life {
 	
 	private BufferedImage LifeImg;
-	private int Max = 3;
-	private int LifeCount;
-	private int lx; // 생명 표현할 위치 x값 
-	private int ly; // 생명 표현할 위치 y값
-	
+
+	private int lx;
+	private int ly;
+
 	private int LifeImgx;
 	private int LifeImgy;
 	private boolean heart;
@@ -42,6 +41,7 @@ public class life {
 			LifeImg = ImageIO.read(LifeImgUrl);
 			LifeImgx = LifeImg.getWidth();
 			LifeImgy = LifeImg.getHeight();
+
             
            
 		}

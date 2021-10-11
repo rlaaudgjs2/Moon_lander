@@ -1,17 +1,29 @@
 package moon_lander;
 
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.WriteResult;
 
+import javax.swing.*;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import javax.swing.JFrame;
 /**
  * Creates frame and set its properties.
  * 
  * @author www.gametutorial.net
  */
 
-public class Window extends JFrame{
-        
-    private Window()
+public class Window extends JFrame {
+
+
+    LoginView loginView;
+
+
+
+    Window()
     {
     	 Music bgmMusic = new Music("DON.mp3", true);
          bgmMusic.start();
@@ -44,14 +56,11 @@ public class Window extends JFrame{
         this.setVisible(true);
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
         // Use the event dispatch thread to build the UI for thread-safety.
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Window();
-            }
-        });
-    }
+         new LoginView();
+
+
 }
+}
+

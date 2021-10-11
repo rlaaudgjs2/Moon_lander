@@ -19,15 +19,22 @@ import javax.imageio.ImageIO;
 
 public class Game {
 
-	
+	private final static int NUMBER_OF_OBSTACLE = 20;
 	
 	private final static int MoveitemSpon = 5;
-	
+
+    private Createlife clife;
 	private MoveItem moveitem[] = new MoveItem[MoveitemSpon];
-	
+
 	private Item item;
 	
 	private life life;
+
+    private  int totallife = 3;
+
+    private  int score;
+
+    private static int total;
     /**
      * The space rocket with which player will have to land.
      */
@@ -48,7 +55,7 @@ public class Game {
      */
     private BufferedImage redBorderImg;
     
-    private BufferedImage MoveItemImg;
+
     
     public Game()
     {
@@ -74,15 +81,17 @@ public class Game {
      */
     private void Initialize()
     {
+
         playerRocket = new PlayerRocket();
         landingArea  = new LandingArea();
         item = new Item();
-        
+        clife = new Createlife();
         life = new life();
         for(int i=0; i< MoveitemSpon; i++ )
         {
         	moveitem[i] = new MoveItem();
         }
+
     }
     
     /**
@@ -113,10 +122,17 @@ public class Game {
         playerRocket.ResetPlayer();
         item.Create();
         life.Create();
+        clife.Create();
         for(int i=0; i< MoveitemSpon; i++ )
         {
         	moveitem[i] = new MoveItem();
         }
+        playerRocket.ResetPlayer();
+        item.Resetitem(this.item);
+        clife.Resetlife(this.clife);
+        item.Create();
+        totallife= 3;
+
     }
     
     
@@ -158,9 +174,42 @@ public class Game {
                 
             Framework.gameState = Framework.GameState.GAMEOVER;
         }
+        if(GetItem(playerRocket, item)) {
+            item.fixedItem = true;
+
+            score=10;
+
+            total = score;
+        }
+
+        if(GetClife(playerRocket, clife)) {
+
+            totallife++;
+            clife.fixedlife = false;
+
+           clife.eraser();
+        }
+
       }
-    
-    
+    public boolean GetItem(PlayerRocket rocket, Item item){
+        boolean check = false;
+        if (Math.abs((playerRocket.x + playerRocket.rocketImgWidth / 2) - (item.ix + item.ItemImgx / 2)) < (item.ItemImgx / 2 + playerRocket.rocketImgWidth / 2) &&
+                Math.abs((playerRocket.y + rocket.rocketImgHeight / 2) - (item.iy + item.ItemImgy / 2)) < (item.ItemImgy / 2 + rocket.rocketImgHeight / 2))
+            check = true;
+
+        return check;
+    }
+    public boolean GetClife(PlayerRocket rocket, Createlife clife){
+        boolean check = false;
+        if (Math.abs((playerRocket.x + playerRocket.rocketImgWidth / 2) - (clife.lx + clife.lifeImgx / 2)) < (clife.lifeImgx / 2 + playerRocket.rocketImgWidth / 2) &&
+                Math.abs((playerRocket.y + rocket.rocketImgHeight / 2) - (clife.ly + clife.lifeImgy / 2)) < (clife.ly / 2 + rocket.rocketImgHeight / 2))
+            check = true;
+
+        return check;
+    }
+
+
+
     /**
      * Draw the game to the screen.
      * 
@@ -177,6 +226,9 @@ public class Game {
         item.Draw(g2d);
         
         life.Draw(g2d);
+        clife.Draw(g2d);
+        g2d.drawString("x "+totallife , 460, 17);
+
     }
     
     
@@ -206,8 +258,5 @@ public class Game {
         }
     }
     
-    public void life(Graphics2D g2d, life life )
-    {
-    	
-    }
+
 }
