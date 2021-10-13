@@ -54,7 +54,7 @@ public class LoginView extends JFrame implements ActionListener {
 
         panel.add(Login);
         panel.add(Create);
-
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Adding the listeners to components..
@@ -66,6 +66,7 @@ public class LoginView extends JFrame implements ActionListener {
                 String p = password_text.getText();
                 if(firebaseData.CheckIsIdPwIsExists(n,p)) {
                     JOptionPane.showMessageDialog( null, "you have logined in successfully" );
+
                 }
                 else
                 {

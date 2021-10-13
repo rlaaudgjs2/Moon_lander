@@ -2,7 +2,7 @@ package moon_lander;
 
 public class Score {
 	
-public static int score  = 10;
+	public static int score  = 10;
 	public static int total  = 0;
 
 	public static int SumScore() {

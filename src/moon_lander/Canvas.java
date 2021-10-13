@@ -11,7 +11,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  * Create a JPanel on which we will draw and listen for keyboard and mouse events.
@@ -26,16 +26,62 @@ public abstract class Canvas extends JPanel implements KeyListener, MouseListene
     
     // Mouse states - Here are stored states for mouse keys - is it down or not.
     private static boolean[] mouseState = new boolean[3];
-        
-    
+
+    private JButton Stage1 = new JButton("Stage1");
+    private JButton Stage2 = new JButton("Stage2");
+    private JButton Stage3 = new JButton("Stage3");
+    private JButton Stage4 = new JButton("Stage4");
+    private JButton Stage5 = new JButton("Stage5");
+    private JButton information = new JButton("information");
+    private JButton Exit = new JButton("Exit");
+    public void addButtonListener() {
+        Framework.mainMenuButtonArrayList.add(Stage1);
+        Framework.mainMenuButtonArrayList.add(Stage2);
+        Framework.mainMenuButtonArrayList.add(Stage3);
+        Framework.mainMenuButtonArrayList.add(Stage4);
+        Framework.mainMenuButtonArrayList.add(Stage5);
+        Framework.mainMenuButtonArrayList.add(information);
+        Framework.mainMenuButtonArrayList.add(Exit);
+    }
+    public void showMainButton(boolean show) {
+        if (show) {
+            this.add(Stage1);
+            this.add(Stage2);
+            this.add(Stage3);
+            this.add(Stage4);
+            this.add(Stage5);
+            this.add(information);
+            this.add(Exit);
+
+            Stage1.setBounds(250, 400, 100, 50);
+            Stage2.setBounds(250, 450,100, 50);
+            Stage3.setBounds(250, 500, 100, 50);
+            Stage4.setBounds(250, 550, 100, 50);
+            Stage5.setBounds(250, 600, 100, 50);
+            information.setBounds(250, 650, 100, 50);
+            Exit.setBounds(250, 700, 100, 50);
+        } else {
+            this.remove(Stage1);
+            this.remove(Stage2);
+            this.remove(Stage3);
+            this.remove(Stage4);
+            this.remove(Stage5);
+            this.remove(information);
+            this.remove(Exit);
+        }
+
+
+
+    }
+
     public Canvas()
     {
         // We use double buffer to draw on the screen.
         this.setDoubleBuffered(true);
         this.setFocusable(true);
         this.setBackground(Color.black);
-        
-        // If you will draw your own mouse cursor or if you just want that mouse cursor disapear, 
+
+        // If you will draw your own mouse cursor or if you just want that mouse cursor disapear,
         // insert "true" into if condition and mouse cursor will be removed.
         if(false)
         {
@@ -43,14 +89,14 @@ public abstract class Canvas extends JPanel implements KeyListener, MouseListene
             Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(blankCursorImg, new Point(0, 0), null);
             this.setCursor(blankCursor);
         }
-        
+
         // Adds the keyboard listener to JPanel to receive key events from this component.
         this.addKeyListener(this);
         // Adds the mouse listener to JPanel to receive mouse events from this component.
         this.addMouseListener(this);
     }
-    
-    
+
+
     // This method is overridden in Framework.java and is used for drawing to the screen.
     public abstract void Draw(Graphics2D g2d);
     
@@ -78,8 +124,8 @@ public abstract class Canvas extends JPanel implements KeyListener, MouseListene
     // Methods of the keyboard listener.
     @Override
     public void keyPressed(KeyEvent e) 
-    {
-        keyboardState[e.getKeyCode()] = true;
+    {keyboardState[e.getKeyCode()] = true;
+
     }
     
     @Override

@@ -3,14 +3,18 @@ package moon_lander;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 /**
  * Framework that controls the game (Game.java) that created it, update it and draw it on the screen.
@@ -19,7 +23,13 @@ import javax.imageio.ImageIO;
  */
 
 public class Framework extends Canvas {
+    public static ArrayList<JButton> mainMenuButtonArrayList = new ArrayList<JButton>();
+    public static boolean isAddMainFirst = false;
+    public static ArrayList<JButton> sellectStageButtonArrayList = new ArrayList<JButton>();
+    public static boolean isAddSellectStageFirst = false;
 
+
+    public static int main;
     /**
      * Width of the frame.
      */
@@ -27,6 +37,7 @@ public class Framework extends Canvas {
     /**
      * Height of the frame.
      */
+
     public static int frameHeight;
 
     /**
@@ -40,7 +51,7 @@ public class Framework extends Canvas {
      * 1 millisecond = 1 000 000 nanoseconds
      */
     public static final long milisecInNanosec = 1000000L;
-    
+    private static final Graphics2D Graphics2D = null;
     /**
      * FPS - Frames per second
      * How many times per second the game should update?
@@ -54,12 +65,12 @@ public class Framework extends Canvas {
     /**
      * Possible states of the game
      */
-    public static enum GameState{STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING, GAMEOVER, DESTROYED}
+
     /**
      * Current state of the game
      */
-    public static GameState gameState;
-    
+
+    public static Framework.GameState gameState;
     /**
      * Elapsed game time in nanoseconds.
      */
@@ -69,14 +80,53 @@ public class Framework extends Canvas {
     
     // The actual game
     private Game game;
-    
+    private  Stage stage;
+
     
     /**
      * Image for menu.
      */
     private BufferedImage moonLanderMenuImg;
-    
-    
+
+    public static enum GameState {
+        STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING, GAMEOVER
+    }
+    private ActionListener MainActionListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton request = (JButton) e.getSource();
+
+            switch (request.getText()){
+                case "Stage1" :
+                    newGame(1);
+                    break;
+                case "Stage2" :
+                    newGame(2);
+                    break;
+                case "Stage3" :
+                    newGame(3);
+                    break;
+                case "Stage4" :
+                    newGame(4);
+                    break;
+                case "Stage5" :
+                    newGame(5);
+                    break;
+                case "information" :
+                    JOptionPane.showMessageDialog(null, "Planner by Myunghun Kim to SoftwareEnginerring Student.", "information", JOptionPane.INFORMATION_MESSAGE);
+
+
+                    break;
+                case "Exit" :
+                    System.exit(0);
+                    break;
+            }
+
+        }
+    };
+
+
+
     public Framework ()
     {
         super();
@@ -92,17 +142,19 @@ public class Framework extends Canvas {
         };
         gameThread.start();
     }
-    
-    
+
+
    /**
      * Set variables and objects.
      * This method is intended to set the variables and objects for this class, variables and objects for the actual game can be set in Game.java.
      */
     private void Initialize()
     {
-        
+
+
     }
-    
+
+
     /**
      * Load files - images, sounds, ...
      * This method is intended to load files for this class, files for the actual game can be loaded in Game.java.
@@ -163,6 +215,10 @@ public class Framework extends Canvas {
 
                     // When all things that are called above finished, we change game status to main menu.
                     gameState = GameState.MAIN_MENU;
+                    showMainButton(true);
+                    addButtonListener();
+                    addButtonListener();
+                    addFrameworkButtonListener();
                 break;
                 case VISUALIZING:
                     // On Ubuntu OS (when I tested on my old computer) this.getWidth() method doesn't return the correct value immediately (eg. for frame that should be 800px width, returns 0 than 790 and at last 798px). 
@@ -211,38 +267,52 @@ public class Framework extends Canvas {
         {
             case PLAYING:
                 game.Draw(g2d, mousePosition());
-            break;
+                showMainButton(false);
+
+                break;
             case GAMEOVER:
             	
                 game.DrawGameOver(g2d, mousePosition(), gameTime);
-            break;
-            case MAIN_MENU://���⿡ ��ư �߰��ؼ� case�� ���� �� �� �ֵ��� �ϱ�
-//                g2d.drawImage(moonLanderMenuImg, 0, 0, frameWidth, frameHeight, null);
-//                g2d.setColor(Color.white);
-//                g2d.drawString("Use w a d keys to controle the rocket.", frameWidth / 2 - 117, frameHeight / 2);
-//                g2d.drawString("Press any key to start the game.", frameWidth / 2 - 100, frameHeight / 2 + 30);
-//                g2d.drawString("WWW.GAMETUTORIAL.NET", 7, frameHeight - 5);
-            break;
+                showMainButton(false);
+
+                break;
+            case MAIN_MENU:
+                g2d.drawImage(moonLanderMenuImg, 0, 0, frameWidth, frameHeight, null);
+
+
+
+
+                break;
             case OPTIONS:
                 //...
             break;
             case GAME_CONTENT_LOADING:
                 g2d.setColor(Color.white);
                 g2d.drawString("GAME is LOADING", frameWidth / 2 - 50, frameHeight / 2);
-            break;
+                showMainButton(false);
+
+                break;
         }
     }
-    
+    public void addFrameworkButtonListener() {
+        for (JButton j :mainMenuButtonArrayList) {
+            j.addActionListener(this.MainActionListener);
+        }
+    }
+
+
+
     /**
      * Starts new game.
      */
-    private void newGame()
+    private void newGame(int level)
     {
         // We set gameTime to zero and lastTime to current time for later calculations.
         gameTime = 0;
         lastTime = System.nanoTime();
         
-        game = new Game();
+        game = new Game(level);
+        requestFocus();
     }
     
     /**
@@ -295,15 +365,28 @@ public class Framework extends Canvas {
         switch (gameState)
         {
             case MAIN_MENU:
-                newGame();
+
             break;
             case GAMEOVER:
                 if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER)
                     restartGame();
-            break;
+                if(e.getKeyCode()== KeyEvent.VK_E) {
+
+                        showMainButton(true);
+                        addButtonListener();
+                        addFrameworkButtonListener();
+                        isAddMainFirst = true;
+
+                    gameState = GameState.MAIN_MENU;
+                }
+
+                break;
         }
     }
-    
+
+
+
+
     /**
      * This method is called when mouse button is clicked.
      * 
@@ -312,6 +395,8 @@ public class Framework extends Canvas {
     @Override
     public void mouseClicked(MouseEvent e)
     {
-        
+
     }
-}
+
+    }
+

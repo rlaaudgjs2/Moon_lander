@@ -65,6 +65,7 @@ public class FirebaseData {
                 Map<String, Object> data = new HashMap<String, Object>() {{
                     put("id", finalId);
                     put("pw", finalPassword);
+//                    put("score",0);
                 }};
 
                 ApiFuture<WriteResult> result = docRef.set(data);
@@ -90,7 +91,7 @@ public class FirebaseData {
                 Map<String, Object> data = new HashMap<String, Object>() {{
                     put("id", finalId);
                     put("pw", finalPassword);
-                    put("score", finalScore);
+//                    put("score", finalScore);
                 }};
 
                 ApiFuture<WriteResult> result = docRef.set(data);
