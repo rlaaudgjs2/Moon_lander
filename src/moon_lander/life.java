@@ -16,8 +16,7 @@ public class life {
 	private int lx;
 	private int ly;
 
-	private int LifeImgx;
-	private int LifeImgy;
+
 	private boolean heart;
 	
 	public life() {
@@ -39,8 +38,7 @@ public class life {
 		try {
 			URL LifeImgUrl = this.getClass().getResource("/resources/images/Life.png");
 			LifeImg = ImageIO.read(LifeImgUrl);
-			LifeImgx = LifeImg.getWidth();
-			LifeImgy = LifeImg.getHeight();
+
 
             
            
@@ -59,14 +57,7 @@ public class life {
 		ly = 2;
 		
 	}
-	public void ResetLife(life life)
-    {
-//		LifeImg = false;
-				
-		 lx = 430;
-	     ly = 2;
-        
-    }
+
 	public void Draw(Graphics2D g2d)
 	{
 		if(heart)

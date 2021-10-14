@@ -234,6 +234,8 @@ public class Game {
             item.fixedItem = true;
             this.item.Resetitem(this.item);
 
+
+
         }
 
 
@@ -319,7 +321,10 @@ public class Game {
             g2d.drawString("You have successfully landed!", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3);
             g2d.drawString("You have landed in " + gameTime / Framework.secInNanosec + " seconds.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 20);
             g2d.drawString("Get score: " + total + " Points.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 30);
-            bestRanking.SetRenewRanking(total);
+
+            bestRanking.SetRenewRanking(String.valueOf(total));
+            //bestRanking.SetRenewRanking(Integer.toBinaryString(total));
+
         }
         else if(playerRocket.crashed)
         {

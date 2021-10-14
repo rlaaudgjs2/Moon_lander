@@ -52,7 +52,7 @@ public class PlayerRocket {
         this.ResetPlayer();
         this.speedAccelerating = 2;
         this.speedStopping = 1;
-        this.topLandingSpeed = 50;
+        this.topLandingSpeed = 5;
     }
     
     private void LoadContent()

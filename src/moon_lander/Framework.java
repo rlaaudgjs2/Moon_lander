@@ -303,6 +303,7 @@ public class Framework extends Canvas {
      */
     private void newGame(int stagelevel)
     {
+
         // We set gameTime to zero and lastTime to current time for later calculations.
         gameTime = 0;
         lastTime = System.nanoTime();

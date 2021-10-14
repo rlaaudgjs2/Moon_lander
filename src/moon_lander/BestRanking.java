@@ -47,10 +47,9 @@ public class BestRanking {
 
     }
 
-    public void SetRenewRanking(int score) {
+    public void SetRenewRanking(String score) {
         try {
-//            Integer.parseInt(score)
-            if (score < GetBestRanking()) {
+            if (Integer.parseInt(score) > GetBestRanking()) {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(userRankFilePath));
 
                 writer.write(score);
