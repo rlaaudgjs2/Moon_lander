@@ -35,13 +35,13 @@ public abstract class Canvas extends JPanel implements KeyListener, MouseListene
     private JButton information = new JButton("information");
     private JButton Exit = new JButton("Exit");
     public void addButtonListener() {
-        Framework.mainMenuButtonArrayList.add(Stage1);
-        Framework.mainMenuButtonArrayList.add(Stage2);
-        Framework.mainMenuButtonArrayList.add(Stage3);
-        Framework.mainMenuButtonArrayList.add(Stage4);
-        Framework.mainMenuButtonArrayList.add(Stage5);
-        Framework.mainMenuButtonArrayList.add(information);
-        Framework.mainMenuButtonArrayList.add(Exit);
+        Framework.ButtonArrayList.add(Stage1);
+        Framework.ButtonArrayList.add(Stage2);
+        Framework.ButtonArrayList.add(Stage3);
+        Framework.ButtonArrayList.add(Stage4);
+        Framework.ButtonArrayList.add(Stage5);
+        Framework.ButtonArrayList.add(information);
+        Framework.ButtonArrayList.add(Exit);
     }
     public void showMainButton(boolean show) {
         if (show) {

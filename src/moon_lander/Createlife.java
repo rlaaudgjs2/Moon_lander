@@ -26,8 +26,8 @@ public class Createlife {
     public Createlife() {
         Initialize();
         LoadContent();
-        lx = (int) (Math.random() * 500);
-        ly = (int) (Math.random() * 400);
+        lx = (int) (Math.random() * 300);
+        ly = (int) (Math.random() * 300)+100;
 
 
     }
@@ -35,25 +35,19 @@ public class Createlife {
 
     private void Initialize() {
         // TODO Auto-generated method stub
-        lx = (int) (Math.random() * 500);
-        ly = (int) (Math.random() * 400);
+        lx = (int) (Math.random() * 300);
+        ly = (int) (Math.random() * 300)+100;
     }
 
 
     public void Create() {
         fixedlife = false;
-        lx = (int) (Math.random() * 500);
-        ly = (int) (Math.random() * 400);
+        lx = (int) (Math.random() * 300);
+        ly = (int) (Math.random() * 300)+100;
 
 
     }
-    public void eraser() {
-        fixedlife = true;
-        lx = -100;
-        ly = -100;
 
-
-    }
 
     private void LoadContent() {
         try {

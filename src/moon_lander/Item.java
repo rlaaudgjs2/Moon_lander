@@ -3,6 +3,7 @@ package moon_lander;
 import java.awt.Graphics2D;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
@@ -29,10 +30,9 @@ public class Item {
 	
 	public Item() {
 		Initialize();
-		LoadContent(); 
-		 ix=(int)(Math.random() * 500);
-	     iy=(int)(Math.random() * 400);
-
+		LoadContent();
+		ix = (int) (Math.random() * 300);
+		iy = (int) (Math.random() * 300)+100;
 
 	}
 	
@@ -41,8 +41,8 @@ public class Item {
 
 	private void Initialize() {
 		// TODO Auto-generated method stub
-		ix=(int)(Math.random() * 500);
-	     iy=(int)(Math.random() * 400);
+		ix = (int) (Math.random() * 300);
+		iy = (int) (Math.random() * 300)+100;
 	}
 
 	
@@ -50,8 +50,8 @@ public class Item {
 	
 	public void Create() {
 		fixedItem = false;
-		ix=(int)(Math.random() * 500);
-	     iy=(int)(Math.random() * 400);
+		ix = (int) (Math.random() * 300);
+		iy = (int) (Math.random() * 300)+100;
 
 	
 	}
@@ -73,9 +73,9 @@ public class Item {
 		public void Resetitem(Item item)
 	    {
 			fixedItem = false;
-					
-			 this.ix=(int)(Math.random() * 500);
-		     this.iy=(int)(Math.random() * 400);
+
+			ix = (int) (Math.random() * 300);
+			iy = (int) (Math.random() * 300)+100;
 
 
 			
@@ -95,7 +95,9 @@ public class Item {
 //		}
 //		   
 //		}
-	
+public void DrawItemReset(Graphics2D g2d) {
+	g2d.drawImage(fixedItemImg, ix, iy, null);
+}
 	public void Draw(Graphics2D g2d)
 	{
 		if(fixedItem)

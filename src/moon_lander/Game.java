@@ -14,37 +14,37 @@ import javax.imageio.ImageIO;
 
 /**
  * Actual game.
- * 
+ *
  * @author www.gametutorial.net
  */
 
 public class Game {
-
+    BestRanking bestRanking = BestRanking.getInstance();
     Firestore firebaseFirestore;
-    private obstracle obstacle1;
+    private Obstacle obstacle;
     private static final int NUMBER_OF_OBSTACLE = 10;
-    private obstacles obstacle[]=new obstacles[10];
+    private Obstacles obstacles[] ;
 
-	private final static int MoveitemSpon = 5;
+    private final static int MoveitemSpon = 5;
 
     private Createlife clife;
-	private MoveItem moveitem[] = new MoveItem[MoveitemSpon];
+    private MoveItem moveitem[] = new MoveItem[MoveitemSpon];
 
-	private Item item;
+    private Item item;
+    private int obsnum;
+    private life life;
 
-	private life life;
+    private int totallife = 3;
 
-    private  int totallife = 3;
+    private int score;
 
-    private  int score;
-
-    private int sum =0;
-    private  int total =0;
+    private int sum = 0;
+    private int total = 0;
     /**
      * The space rocket with which player will have to land.
      */
     private PlayerRocket playerRocket;
-    private  int stagelevel;
+    private int stagelevel;
     /**
      * Landing area on which rocket will have to land.
      */
@@ -62,15 +62,15 @@ public class Game {
 
 
 
-    public Game(int level)
-    {
+
+
+    public Game(final int level) {
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
-        stagelevel = level;
         Thread threadForInitGame = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 // Sets variables and objects for the game.
-                Initialize();
+                Initialize(level);
                 // Load game files (images, sounds, ...)
                 LoadContent();
 
@@ -81,97 +81,28 @@ public class Game {
     }
 
 
-   /**
+    /**
      * Set variables and objects for the game.
      */
-    private void Initialize()
-    {
-        long gameTime = 0L;
+    private void Initialize(int level) {
         this.playerRocket = new PlayerRocket();
         this.landingArea = new LandingArea();
-
-        switch (stagelevel) {
-            case 1:
-
-                if (gameTime / 1000000000L < 5L) {
-                    this.obstacle1 = new obstracle();
-                }
-                stagelevel = 5;
-                for(int i = 0; i < stagelevel; ++i) {
-                    this.obstacle[i] = new obstacles();
-                }
-                for(int i = 0; i < stagelevel; ++i) {
-                    item = new Item();
-                }
-                for(int i = 0; i < stagelevel; ++i) {
-                    clife = new Createlife();
-                }
-                break;
-            case 2:
-                if (gameTime / 1000000000L < 5L) {
-                    this.obstacle1 = new obstracle();
-                }
-                stagelevel = 7;
-                for(int i = 0; i < stagelevel ; ++i) {
-                    this.obstacle[i] = new obstacles();
-                }
-                for(int i = 0; i <stagelevel ;++i) {
-                    item = new Item();
-                }
-                for(int i = 0; i <stagelevel; ++i) {
-                    clife = new Createlife();
-                }
-                break;
-            case 3:
-                if (gameTime / 1000000000L < 5L) {
-                    this.obstacle1 = new obstracle();
-                }
-                stagelevel =9;
-                for(int i = 0; i < stagelevel; ++i) {
-                    this.obstacle[i] = new obstacles();
-                }
-                for(int i = 0; i < stagelevel ;++i) {
-                    item = new Item();
-                }
-                for(int i = 0; i < stagelevel-2; ++i) {
-                    clife = new Createlife();
-                }
-                break;
-            case 4:
-                stagelevel =11;
-                if (gameTime / 1000000000L < 5L) {
-                    for (int i = 0; i < stagelevel; ++i) {
-                        this.obstacle[i] = new obstacles();
-                    }
-                    for (int i = 0; i < stagelevel; ++i) {
-                        item = new Item();
-                    }
-                    for (int i = 0; i < stagelevel - 3; ++i) {
-                        clife = new Createlife();
-                    }
-                }
-                break;
-            case 5:
-                if (gameTime / 1000000000L < 5L) {
-                    stagelevel = 13;
-                    for (int i = 0; i < stagelevel; ++i) {
-                        this.obstacle[i] = new obstacles();
-                    }
-                    for (int i = 0; i < stagelevel; ++i) {
-                        item = new Item();
-                    }
-                    for (int i = 0; i < stagelevel - 4; ++i) {
-                        clife = new Createlife();
-                    }
-                }
-                break;
+        obstacles = new Obstacles[level*3];
+        for (int i = 0; i < obstacles.length; ++i) {
+            this.obstacles[i] = new Obstacles();
         }
-
-
-
-
-
+        long gameTime = 0L;
+        this.item = new Item();
+        this.playerRocket = new PlayerRocket();
+        this.landingArea = new LandingArea();
+        this.obstacle = new Obstacle();
+        for (int i = 0; i < obstacles.length; ++i) {
+            this.obstacles[i] = new Obstacles();
+        }
+        this.life = new life();
+        this.clife= new Createlife();
     }
+
 
     /**
      * Load game files - images, sounds, ...
@@ -198,25 +129,16 @@ public class Game {
     public void RestartGame()
     {
 
-        playerRocket.ResetPlayer();
-        item.Create();
-        life.Create();
-        clife.Create();
-        for(int i = 0; i < 10; ++i) {
-            this.obstacle[i].resetObstacles();
-        }
-        for(int i=0; i< MoveitemSpon; i++ )
-        {
-        	moveitem[i] = new MoveItem();
-        }
+
         playerRocket.ResetPlayer();
         item.Resetitem(this.item);
         clife.Resetlife(this.clife);
         item.Create();
+        obstacle.Create();
         totallife= 3;
         //add obstales
-        for (int i = 0; i < NUMBER_OF_OBSTACLE; i++)
-            obstacle[i].resetObstacles();
+        for (int i = 0; i < obstacles.length; ++i)
+            obstacles[i].resetObstacles();
     }
 
 
@@ -230,66 +152,87 @@ public class Game {
         // Move the rocket
         this.playerRocket.Update();
 
-        if(!(stagelevel==0)){
-        for(int i = 0; i < 10; ++i) {
-            this.obstacle[i].Update();
-            if (this.playerRocket.x < this.obstacle[i].x + this.obstacle[i].obstacleImgWidth && this.playerRocket.x + this.playerRocket.rocketImgWidth > this.obstacle[i].x && this.playerRocket.y < this.obstacle[i].y + this.obstacle[i].obstacleImgHeight && this.playerRocket.rocketImgHeight + this.playerRocket.y > this.obstacle[i].y) {
 
-                this.obstacle[i].resetObstacles();
-                if (totallife > 1) {
-                    totallife--;
-                    this.obstacle[i].crashed = true;
-                } else if (totallife == 1) {
-                    totallife--;
+            for(int i = 0; i < obstacles.length; ++i) {
+
+                this.obstacles[i].Update();
+
+                if (this.playerRocket.x < this.obstacles[i].x + this.obstacles[i].obstacleImgWidth && this.playerRocket.x + this.playerRocket.rocketImgWidth > this.obstacles[i].x && this.playerRocket.y < this.obstacles[i].y + this.obstacles[i].obstacleImgHeight && this.playerRocket.rocketImgHeight + this.playerRocket.y > this.obstacles[i].y) {
+
+                    this.obstacles[i].resetObstacles();
+                    if (totallife > 1) {
+                        totallife--;
+                        this.obstacles[i].crashed = true;
+                    } else if (totallife == 1) {
+                        totallife--;
+                        this.playerRocket.crashed = true;
+                        Framework.gameState = Framework.GameState.GAMEOVER;
+                    }
+                }
+
+                if (this.obstacles[i].y + this.obstacles[i].obstacleImgHeight - 10 > this.landingArea.y) {
+                    this.obstacles[i].crashed = true;
+                }
+
+                if (this.playerRocket.y + this.playerRocket.rocketImgHeight < 0 || this.playerRocket.x + this.playerRocket.rocketImgWidth < Framework.frameWidth * 0 || this.playerRocket.x > Framework.frameWidth * 1) {
+                    this.playerRocket.wentout = true;
+                    Framework.gameState = Framework.GameState.GAMEOVER;
+                }//경계값 설정
+
+                if (gameTime / 1000000000L < 30L && this.playerRocket.x < this.obstacle.x +
+                        this.obstacle.obstacle1ImgWidth && this.playerRocket.x +
+                        this.playerRocket.rocketImgWidth > this.obstacle.x &&
+                        this.playerRocket.y < this.obstacle.y + this.obstacle.obstacle1ImgHeight &&
+                        this.playerRocket.rocketImgHeight + this.playerRocket.y > this.obstacle.y) {
                     this.playerRocket.crashed = true;
+                    Framework.gameState = Framework.GameState.GAMEOVER;
+                }//
+                if(gameTime / 1000000000L < 30L)
+                {
+                    this.obstacle.obstacle =false;
+                    this.clife.fixedlife = false;
+                    this.item.fixedItem = false;
+
+                }
+                else
+                {
+                    this.obstacle.obstacle =true;
+                    this.clife.fixedlife = true;
+                    this.item.fixedItem = true;
+
+                }
+
+
+
+                Music Music1 = new Music("Fail.mp3", false);
+                Music Music2 = new Music("success.MP3", false);
+                // Checks where the player rocket is. Is it still in the space or is it landed or crashed?
+                // First we check bottom y coordinate of the rocket if is it near the landing area.
+                if (playerRocket.y + playerRocket.rocketImgHeight - 10 > landingArea.y) {
+                    // Here we check if the rocket is over landing area.
+                    if ((playerRocket.x > landingArea.x) && (playerRocket.x < landingArea.x + landingArea.landingAreaImgWidth - playerRocket.rocketImgWidth)) {
+                        // Here we check if the rocket speed isn't too high.
+                        if (playerRocket.speedY <= playerRocket.topLandingSpeed) {
+                            playerRocket.landed = true;
+
+                            Music1.close();
+                            Music2.start();
+                        } else {
+                            playerRocket.crashed = true;
+                            Music1.start();
+                            Music2.close();
+                        }
+                    } else
+                        playerRocket.crashed = true;
+
                     Framework.gameState = Framework.GameState.GAMEOVER;
                 }
             }
 
-            if (this.obstacle[i].y + this.obstacle[i].obstacleImgHeight - 10 > this.landingArea.y) {
-                this.obstacle[i].crashed = true;
-            }
-
-            if (this.playerRocket.y + this.playerRocket.rocketImgHeight < 0 || this.playerRocket.x + this.playerRocket.rocketImgWidth < Framework.frameWidth * 0 || this.playerRocket.x > Framework.frameWidth * 1) {
-                this.playerRocket.wentout = true;
-                Framework.gameState = Framework.GameState.GAMEOVER;
-            }
-
-            if (gameTime / 1000000000L < 5L && this.playerRocket.x < this.obstacle1.x + this.obstacle1.obstacle1ImgWidth && this.playerRocket.x + this.playerRocket.rocketImgWidth > this.obstacle1.x && this.playerRocket.y < this.obstacle1.y + this.obstacle1.obstacle1ImgHeight && this.playerRocket.rocketImgHeight + this.playerRocket.y > this.obstacle1.y) {
-                this.playerRocket.crashed = true;
-                Framework.gameState = Framework.GameState.GAMEOVER;
-            }
-
-
-            Music Music1 = new Music("Fail.mp3", false);
-            Music Music2 = new Music("success.MP3", false);
-            // Checks where the player rocket is. Is it still in the space or is it landed or crashed?
-            // First we check bottom y coordinate of the rocket if is it near the landing area.
-            if (playerRocket.y + playerRocket.rocketImgHeight - 10 > landingArea.y) {
-                // Here we check if the rocket is over landing area.
-                if ((playerRocket.x > landingArea.x) && (playerRocket.x < landingArea.x + landingArea.landingAreaImgWidth - playerRocket.rocketImgWidth)) {
-                    // Here we check if the rocket speed isn't too high.
-                    if (playerRocket.speedY <= playerRocket.topLandingSpeed) {
-                        playerRocket.landed = true;
-
-                        Music1.close();
-                        Music2.start();
-                    } else {
-                        playerRocket.crashed = true;
-                        Music1.start();
-                        Music2.close();
-                    }
-                } else
-                    playerRocket.crashed = true;
-
-                Framework.gameState = Framework.GameState.GAMEOVER;
-            }
-        }
-    }
         if(GetItem(playerRocket, item)) {
+            total += 100;
             item.fixedItem = true;
-
-//       total = (100/(int)(gameTime / Framework.secInNanosec));
+            this.item.Resetitem(this.item);
 
         }
 
@@ -297,12 +240,12 @@ public class Game {
         if(GetClife(playerRocket, clife)) {
 
             totallife++;
-            clife.fixedlife = false;
+            clife.fixedlife = true;
 
-           clife.eraser();
+            this.clife.Resetlife(this.clife);
         }
 
-      }
+    }
     public boolean GetItem(PlayerRocket rocket, Item item){
         boolean check = false;
         if (Math.abs((playerRocket.x + playerRocket.rocketImgWidth / 2) - (item.ix + item.ItemImgx / 2)) < (item.ItemImgx / 2 + playerRocket.rocketImgWidth / 2) &&
@@ -313,9 +256,11 @@ public class Game {
     }
     public boolean GetClife(PlayerRocket rocket, Createlife clife){
         boolean check = false;
+
         if (Math.abs((playerRocket.x + playerRocket.rocketImgWidth / 2) - (clife.lx + clife.lifeImgx / 2)) < (clife.lifeImgx / 2 + playerRocket.rocketImgWidth / 2) &&
                 Math.abs((playerRocket.y + rocket.rocketImgHeight / 2) - (clife.ly + clife.lifeImgy / 2)) < (clife.ly / 2 + rocket.rocketImgHeight / 2))
             check = true;
+
 
         return check;
     }
@@ -341,14 +286,16 @@ public class Game {
         clife.Draw(g2d);
         g2d.drawString("x "+totallife , 460, 17);
         //add obstacle
-        obstacle1.Draw(g2d);
+
         //add moving obstacle
-        for (int i = 0; i < NUMBER_OF_OBSTACLE; i++) {
-            obstacle[i].Draw(g2d);
-            if (obstacle[i].crashed) {
-                obstacle[i].DrawobstacleCrash(g2d);
+        for (int i = 0; i < obstacles.length; i++) {
+            obstacles[i].Draw(g2d);
+            if (obstacles[i].crashed) {
+                obstacles[i].DrawobstacleCrash(g2d);
             }
         }
+
+        obstacle.Draw(g2d);
     }
 
 
@@ -367,11 +314,12 @@ public class Game {
         g2d.drawString("Press E to Mainmenu.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 80);
         if(playerRocket.landed)
         {
-//            firebaseFirestore.collection("Login").document(id).set(score);
+
 
             g2d.drawString("You have successfully landed!", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3);
             g2d.drawString("You have landed in " + gameTime / Framework.secInNanosec + " seconds.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 20);
             g2d.drawString("Get score: " + total + " Points.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 30);
+            bestRanking.SetRenewRanking(total);
         }
         else if(playerRocket.crashed)
         {

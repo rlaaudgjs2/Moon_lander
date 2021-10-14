@@ -23,12 +23,12 @@ import javax.swing.*;
  */
 
 public class Framework extends Canvas {
-    public static ArrayList<JButton> mainMenuButtonArrayList = new ArrayList<JButton>();
-    public static boolean isAddMainFirst = false;
+    public static ArrayList<JButton> ButtonArrayList = new ArrayList<JButton>();
+    public static boolean MainFirst = false;
     public static ArrayList<JButton> sellectStageButtonArrayList = new ArrayList<JButton>();
     public static boolean isAddSellectStageFirst = false;
 
-
+    BestRanking bestRanking = new BestRanking();
     public static int main;
     /**
      * Width of the frame.
@@ -80,7 +80,6 @@ public class Framework extends Canvas {
     
     // The actual game
     private Game game;
-    private  Stage stage;
 
     
     /**
@@ -279,9 +278,6 @@ public class Framework extends Canvas {
             case MAIN_MENU:
                 g2d.drawImage(moonLanderMenuImg, 0, 0, frameWidth, frameHeight, null);
 
-
-
-
                 break;
             case OPTIONS:
                 //...
@@ -295,7 +291,7 @@ public class Framework extends Canvas {
         }
     }
     public void addFrameworkButtonListener() {
-        for (JButton j :mainMenuButtonArrayList) {
+        for (JButton j :ButtonArrayList) {
             j.addActionListener(this.MainActionListener);
         }
     }
@@ -305,13 +301,13 @@ public class Framework extends Canvas {
     /**
      * Starts new game.
      */
-    private void newGame(int level)
+    private void newGame(int stagelevel)
     {
         // We set gameTime to zero and lastTime to current time for later calculations.
         gameTime = 0;
         lastTime = System.nanoTime();
-        
-        game = new Game(level);
+        game = new Game(stagelevel);
+
         requestFocus();
     }
     
@@ -375,7 +371,7 @@ public class Framework extends Canvas {
                         showMainButton(true);
                         addButtonListener();
                         addFrameworkButtonListener();
-                        isAddMainFirst = true;
+                        MainFirst = true;
 
                     gameState = GameState.MAIN_MENU;
                 }

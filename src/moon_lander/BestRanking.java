@@ -7,7 +7,7 @@ public class BestRanking {
     private static BestRanking bestRanking = null;
     private static String userRankFilePath = System.getProperty("user.dir") + "moon_lander_bestranking";
 
-    private BestRanking() {
+    BestRanking() {
         if (!isUserRankFileExists()) {
             File file = new File(userRankFilePath);
 
@@ -41,12 +41,16 @@ public class BestRanking {
     }
 
     public void ShowRanking() {
-        JOptionPane.showMessageDialog(null, "Best Ranking score is : " + GetBestRanking());
+
+            JOptionPane.showMessageDialog(null, "Best Ranking score is : " + GetBestRanking());
+
+
     }
 
-    public void SetRenewRanking(String score) {
+    public void SetRenewRanking(int score) {
         try {
-            if (Integer.parseInt(score) < GetBestRanking()) {
+//            Integer.parseInt(score)
+            if (score < GetBestRanking()) {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(userRankFilePath));
 
                 writer.write(score);

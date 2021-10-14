@@ -13,6 +13,7 @@ import javax.swing.*;
 
 public class LoginView extends JFrame implements ActionListener {
     FirebaseData firebaseData = new FirebaseData();
+    BestRanking bestRanking = BestRanking.getInstance();
     private static boolean isFirstRun = false;
     JPanel panel;
     JLabel user_label, password_label, message;
@@ -66,7 +67,7 @@ public class LoginView extends JFrame implements ActionListener {
                 String p = password_text.getText();
                 if(firebaseData.CheckIsIdPwIsExists(n,p)) {
                     JOptionPane.showMessageDialog( null, "you have logined in successfully" );
-
+                    bestRanking.ShowRanking();
                 }
                 else
                 {

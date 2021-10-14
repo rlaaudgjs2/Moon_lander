@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
-public class obstacles {
+public class Obstacles {
     private Random randomNumber;
     public int x;
     public int y;
@@ -35,7 +35,7 @@ public class obstacles {
     private int speedAccelerating;
     private int speedStopping;
 
-    obstacles() {
+    Obstacles() {
         this.Initialize();
         this.LoadContent();
     }
@@ -55,35 +55,33 @@ public class obstacles {
             this.obstacleImgHeight = this.obstacleImg.getHeight();
 
         } catch (IOException var4) {
-            Logger.getLogger(obstacles.class.getName()).log(Level.SEVERE, (String)null, var4);
+            Logger.getLogger(Obstacles.class.getName()).log(Level.SEVERE, (String)null, var4);
         }
 
     }
 
     public void resetObstacles() {
-        this.crashed = false;
-        this.x = this.randomNumber.nextInt(Framework.frameWidth - this.obstacleImgWidth);
-        this.y = -110;
-        this.obstacleFlyDirection = this.randomNumber.nextBoolean();
-        if (this.obstacleFlyDirection) {
-            this.speedx = this.randomNumber.nextInt(5) + 3;
-            this.speedy = this.randomNumber.nextInt(5) + 4;
+        crashed = false;
+        x = randomNumber.nextInt(Framework.frameWidth - obstacleImgWidth);
+        y = -110;
+        obstacleFlyDirection = randomNumber.nextBoolean();
+        if (obstacleFlyDirection) {
+            speedx = randomNumber.nextInt(MAX_RANDOM_SPEED) + SMALLEST_X_SPEED;
+            speedy = randomNumber.nextInt(MAX_RANDOM_SPEED) + SMALLEST_Y_SPEED;
         } else {
-            this.speedx = -this.randomNumber.nextInt(5) - 3;
-            this.speedy = this.randomNumber.nextInt(5) + 4;
+            speedx = -randomNumber.nextInt(MAX_RANDOM_SPEED) - SMALLEST_X_SPEED;
+            speedy = randomNumber.nextInt(MAX_RANDOM_SPEED) + SMALLEST_Y_SPEED;
         }
-
     }
 
     public void Update() {
-        if (this.crashed) {
-            this.speedx = 0;
-            this.speedy = 0;
-            this.resetObstacles();
+        if (crashed) {
+            speedx = 0;
+            speedy = 0;
+            resetObstacles();
         }
-
-        this.x += this.speedx;
-        this.y += this.speedy;
+        x += speedx;
+        y += speedy;
     }
 
     public void DrawobstacleCrash(Graphics2D g2d) {
